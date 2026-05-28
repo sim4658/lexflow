@@ -187,7 +187,7 @@ function parseRisposta(testo: string): {
     return testo
       .split("\n")
       .map((r) => r.replace(/^[-*•]\s*/, "").trim())
-      .filter((r) => r.length > 0);
+      .filter((r) => r.length > 0 && !/^-{2,}$/.test(r));
   };
 
   const riassuntoTesto = estraiSezione(
