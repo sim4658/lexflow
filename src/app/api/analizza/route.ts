@@ -92,7 +92,7 @@ export async function POST(request: NextRequest) {
       // Analisi PDF nativa via Anthropic (supporto documenti)
       risposta = await client.messages.create({
         model: MODELLO,
-        max_tokens: 2000,
+        max_tokens: 4000,
         system: SYSTEM_PROMPT,
         messages: [
           {
@@ -121,7 +121,7 @@ export async function POST(request: NextRequest) {
       // Analisi testo semplice
       risposta = await client.messages.create({
         model: MODELLO,
-        max_tokens: 2000,
+        max_tokens: 4000,
         system: SYSTEM_PROMPT,
         messages: [
           {
@@ -134,6 +134,8 @@ export async function POST(request: NextRequest) {
 
     const testoRisposta =
       risposta.content[0].type === "text" ? risposta.content[0].text : "";
+
+    console.log("=== RISPOSTA GREZZA API ===\n", testoRisposta, "\n=== FINE RISPOSTA ===");
 
     // Parsing delle sezioni dalla risposta
     const sezioni = parseRisposta(testoRisposta);
