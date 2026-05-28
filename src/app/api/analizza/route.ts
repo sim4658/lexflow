@@ -207,7 +207,7 @@ function parseRisposta(testo: string): {
 
   const azioniTesto = estraiSezione(
     /##\s*4\.\s*AZIONI LEGALI/i,
-    /---|$/im
+    /---/
   );
 
   return {
