@@ -187,7 +187,13 @@ function parseRisposta(testo: string): {
     return testo
       .split("\n")
       .map((r) => r.replace(/^[-*•]\s*/, "").trim())
-      .filter((r) => r.length > 0 && !/^-{2,}$/.test(r));
+      .filter((r) => {
+        if (r.length === 0) return false;
+        if (/^-{2,}$/.test(r)) return false;
+        const hasLowercase = /[a-zàèéìòùäöü]/.test(r);
+        const hasPunctuation = /[.?!,;:]/.test(r);
+        return hasLowercase || hasPunctuation;
+      });
   };
 
   const riassuntoTesto = estraiSezione(
