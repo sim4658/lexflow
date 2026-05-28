@@ -3,6 +3,19 @@
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import Link from "next/link";
+import ReactMarkdown from "react-markdown";
+import type { Components } from "react-markdown";
+
+const mdComponents: Components = {
+  strong: ({ children }) => <strong className="font-semibold text-gray-900">{children}</strong>,
+  em: ({ children }) => <em className="italic">{children}</em>,
+  p: ({ children }) => <p className="my-1 leading-relaxed">{children}</p>,
+};
+
+const mdInlineComponents: Components = {
+  ...mdComponents,
+  p: ({ children }) => <span className="leading-relaxed">{children}</span>,
+};
 
 /* ── Tipi ── */
 
@@ -391,9 +404,9 @@ function SezioneRisultati({
         colore="blu"
         icona={<SummaryIcon className="w-5 h-5 text-navy" />}
       >
-        <p className="text-gray-700 leading-relaxed whitespace-pre-line text-sm">
-          {risultato.riassunto || "Nessun riassunto disponibile."}
-        </p>
+        <div className="text-gray-700 text-sm">
+          <ReactMarkdown components={mdComponents}>{risultato.riassunto || "Nessun riassunto disponibile."}</ReactMarkdown>
+        </div>
       </CardAnalisi>
 
       {/* Card 2: Clausole critiche */}
@@ -411,7 +424,7 @@ function SezioneRisultati({
                 <span className="flex-shrink-0 w-5 h-5 rounded-full bg-red-100 text-red-700 text-xs font-bold flex items-center justify-center mt-0.5">
                   !
                 </span>
-                <span className="text-gray-700 leading-relaxed">{clausola}</span>
+                <span className="text-gray-700"><ReactMarkdown components={mdInlineComponents}>{clausola}</ReactMarkdown></span>
               </li>
             ))}
           </ul>
@@ -435,7 +448,7 @@ function SezioneRisultati({
                 <span className="flex-shrink-0 w-5 h-5 rounded-full bg-amber-100 text-amber-700 text-xs font-bold flex items-center justify-center mt-0.5">
                   {i + 1}
                 </span>
-                <span className="text-gray-700 leading-relaxed">{domanda}</span>
+                <span className="text-gray-700"><ReactMarkdown components={mdInlineComponents}>{domanda}</ReactMarkdown></span>
               </li>
             ))}
           </ul>
@@ -457,7 +470,7 @@ function SezioneRisultati({
                 <span className="flex-shrink-0 w-5 h-5 rounded-full bg-green-100 text-green-700 text-xs font-bold flex items-center justify-center mt-0.5">
                   →
                 </span>
-                <span className="text-gray-700 leading-relaxed">{azione}</span>
+                <span className="text-gray-700"><ReactMarkdown components={mdInlineComponents}>{azione}</ReactMarkdown></span>
               </li>
             ))}
           </ul>
